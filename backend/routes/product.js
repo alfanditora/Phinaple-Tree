@@ -1,10 +1,12 @@
 const express = require('express');
 const Product = require('../models/product');
+const sequelize = require('../config/db');
 const router = express.Router();
 const authenticate = require('../middleware/auth');
+const roleAuthorization = require('../middleware/role');
 
 // Create Product (protected route)
-router.post('/create', authenticate, async (req, res) => {
+router.post('/create', authenticate, roleAuthorization(['admin']), async (req, res) => {
     const {
         name,
         brand,
@@ -69,7 +71,7 @@ router.get('/:id', authenticate, async (req, res) => {
 });
 
 // Update Product (protected route)
-router.put('/:id', authenticate, async (req, res) => {
+router.put('/:id', authenticate, roleAuthorization(['admin']), async (req, res) => {
     const { id } = req.params;
     const {
         name,
@@ -112,17 +114,19 @@ router.put('/:id', authenticate, async (req, res) => {
 });
 
 // Delete Product (protected route)
-router.delete('/:id', authenticate, async (req, res) => {
+router.delete('/:id', authenticate, roleAuthorization(['admin']), async (req, res) => {
     const { id } = req.params;
     try {
         const product = await Product.findByPk(id);
         if (!product) return res.status(404).json({ error: 'Product not found' });
 
         await product.destroy();
+
+        // Resetting the autoincrement value for the "id" column
         await sequelize.query(`
-            SELECT setval(pg_get_serial_sequence('Products', 'id'), coalesce(max(id), 1), false) FROM "Products";
+            SELECT setval(pg_get_serial_sequence('"Products"', 'id'), coalesce(max(id), 1) + 1, false) FROM "Products";
         `);
-        
+
         return res.status(200).json({ message: 'Product deleted' });
     } catch (error) {
         console.error(error);
@@ -147,6 +151,5 @@ router.get('/brand/:brand', authenticate, async (req, res) => {
         return res.status(500).json({ error: 'Error fetching products by brand' });
     }
 });
-
 
 module.exports = router;
