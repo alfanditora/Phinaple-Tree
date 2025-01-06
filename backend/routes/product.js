@@ -2,11 +2,10 @@ const express = require('express');
 const Product = require('../models/product');
 const sequelize = require('../config/db');
 const router = express.Router();
-const authenticate = require('../middleware/auth');
-const roleAuthorization = require('../middleware/role');
+const roleAuthorization = require('../middleware/role');;
 
 // Create Product (protected route)
-router.post('/create', authenticate, roleAuthorization(['admin']), async (req, res) => {
+router.post('/create', roleAuthorization(['admin']), async (req, res) => {
     const {
         name,
         brand,
@@ -45,7 +44,7 @@ router.post('/create', authenticate, roleAuthorization(['admin']), async (req, r
 });
 
 // Get All Products (protected route)
-router.get('/', authenticate, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const products = await Product.findAll({
             order: [['id', 'ASC']]
@@ -58,7 +57,7 @@ router.get('/', authenticate, async (req, res) => {
 });
 
 // Get a Single Product (protected route)
-router.get('/:id', authenticate, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const product = await Product.findByPk(id);
@@ -71,7 +70,7 @@ router.get('/:id', authenticate, async (req, res) => {
 });
 
 // Update Product (protected route)
-router.put('/:id', authenticate, roleAuthorization(['admin']), async (req, res) => {
+router.put('/:id', roleAuthorization(['admin']), async (req, res) => {
     const { id } = req.params;
     const {
         name,
@@ -114,7 +113,7 @@ router.put('/:id', authenticate, roleAuthorization(['admin']), async (req, res) 
 });
 
 // Delete Product (protected route)
-router.delete('/:id', authenticate, roleAuthorization(['admin']), async (req, res) => {
+router.delete('/:id', roleAuthorization(['admin']), async (req, res) => {
     const { id } = req.params;
     try {
         const product = await Product.findByPk(id);
@@ -135,7 +134,7 @@ router.delete('/:id', authenticate, roleAuthorization(['admin']), async (req, re
 });
 
 // Get Products by Brand (protected route)
-router.get('/brand/:brand', authenticate, async (req, res) => {
+router.get('/brand/:brand', async (req, res) => {
     const { brand } = req.params;
     try {
         const products = await Product.findAll({

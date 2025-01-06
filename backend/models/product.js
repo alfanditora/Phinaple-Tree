@@ -11,7 +11,7 @@ const Product = sequelize.define('Product', {
         allowNull: false,
     },
     display: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING, 
         allowNull: true,
     },
     chipset: {
@@ -19,15 +19,15 @@ const Product = sequelize.define('Product', {
         allowNull: true,
     },
     ram: {
-        type: DataTypes.INTEGER, // RAM misalnya "8GB", "16GB", dll
+        type: DataTypes.STRING, // RAM misalnya "8GB", "16GB", dll
         allowNull: true,
     },
     storage: {
-        type: DataTypes.INTEGER, // Penyimpanan misalnya "128GB", "256GB", dll
+        type: DataTypes.STRING, // Penyimpanan misalnya "128GB", "256GB", dll
         allowNull: true,
     },
     camera: {
-        type: DataTypes.INTEGER, // Misalnya "12 MP"
+        type: DataTypes.STRING, // Misalnya "12 MP"
         allowNull: true,
     },
     video: {
@@ -35,7 +35,7 @@ const Product = sequelize.define('Product', {
         allowNull: true,
     },
     battery: {
-        type: DataTypes.INTEGER, // Misalnya "4000mAh", "5000mAh", dll
+        type: DataTypes.STRING, // Misalnya "4000mAh", "5000mAh", dll
         allowNull: true,
     },
     OS: {
