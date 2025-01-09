@@ -22,6 +22,11 @@ router.post('/create', roleAuthorization(['admin']), async (req, res) => {
     } = req.body;
 
     try {
+        const existingProduct = await Product.findOne({ where: { name } });
+        if (existingProduct) {
+            return res.status(400).json({ error: 'Product name must be unique' });
+        }
+
         const newProduct = await Product.create({
             name,
             brand,
@@ -57,10 +62,12 @@ router.get('/', async (req, res) => {
 });
 
 // Get a Single Product (protected route)
-router.get('/:id', async (req, res) => {
-    const { id } = req.params;
+router.get('/:productName', async (req, res) => {
+    const { productName } = req.params;
     try {
-        const product = await Product.findByPk(id);
+        const product = await Product.findOne({
+            where: { name: productName }
+        });
         if (!product) return res.status(404).json({ error: 'Product not found' });
         return res.status(200).json(product);
     } catch (error) {
@@ -70,8 +77,8 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update Product (protected route)
-router.put('/:id', roleAuthorization(['admin']), async (req, res) => {
-    const { id } = req.params;
+router.put('/:productName', roleAuthorization(['admin']), async (req, res) => {
+    const { productName } = req.params;
     const {
         name,
         brand,
@@ -88,7 +95,9 @@ router.put('/:id', roleAuthorization(['admin']), async (req, res) => {
     } = req.body;
 
     try {
-        const product = await Product.findByPk(id);
+        const product = await Product.findOne({
+            where: { name: productName }
+        });
         if (!product) return res.status(404).json({ error: 'Product not found' });
 
         product.name = name || product.name;
@@ -113,17 +122,19 @@ router.put('/:id', roleAuthorization(['admin']), async (req, res) => {
 });
 
 // Delete Product (protected route)
-router.delete('/:id', roleAuthorization(['admin']), async (req, res) => {
-    const { id } = req.params;
+router.delete('/:productName', roleAuthorization(['admin']), async (req, res) => {
+    const { productName } = req.params;
     try {
-        const product = await Product.findByPk(id);
+        const product = await Product.findOne({
+            where: { name: productName }
+        });
         if (!product) return res.status(404).json({ error: 'Product not found' });
 
         await product.destroy();
 
         // Resetting the autoincrement value for the "id" column
         await sequelize.query(`
-            SELECT setval(pg_get_serial_sequence('"Products"', 'id'), coalesce(max(id), 1) + 1, false) FROM "Products";
+            SELECT setval(pg_get_serial_sequence('products', 'id'), coalesce(max(id), 1) + 1, false) FROM products;
         `);
 
         return res.status(200).json({ message: 'Product deleted' });

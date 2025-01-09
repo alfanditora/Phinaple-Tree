@@ -5,6 +5,7 @@ const Product = sequelize.define('Product', {
     name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
     },
     brand: {
         type: DataTypes.STRING,
@@ -50,6 +51,13 @@ const Product = sequelize.define('Product', {
         type: DataTypes.INTEGER,
         defaultValue: 0,
     },
+    image: {
+        type: DataTypes.STRING, // Misal 'product/file.webp
+        allowNull: false,
+    },
+}, {
+    tableName: 'products',
+    timestamps: true, 
 });
 
 module.exports = Product;

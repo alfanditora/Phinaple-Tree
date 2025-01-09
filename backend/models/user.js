@@ -24,6 +24,9 @@ const User = sequelize.define('User', {
             isIn: [['admin', 'customer']],
         },
     },
+}, {
+    tableName: 'users',
+    timestamps: true, // CreatedAt and UpdatedAt
 });
 
 module.exports = User;
