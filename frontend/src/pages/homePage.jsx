@@ -20,7 +20,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/products', {
+        const response = await fetch('https://phonestore-chatbot-production.up.railway.app/api/products', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

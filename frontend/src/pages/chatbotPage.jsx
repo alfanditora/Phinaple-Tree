@@ -45,7 +45,7 @@ Feel free to ask me anything about our smartphone collection! What would you lik
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:5000/api/chatbot', {
+            const response = await fetch('https://phonestore-chatbot-production.up.railway.app/api/chatbot', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

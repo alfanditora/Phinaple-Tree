@@ -64,7 +64,7 @@ const PaymentPage = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:5000/api/payment/create', {
+      const response = await fetch('https://phonestore-chatbot-production.up.railway.app/api/payment/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const PaymentPage = () => {
 
   const checkPaymentStatus = async (paymentId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/payment/check/${paymentId}`, {
+      const response = await fetch(`https://phonestore-chatbot-production.up.railway.app/api/payment/check/${paymentId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
