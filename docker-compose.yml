@@ -1,0 +1,30 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:5000
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=postgresql://postgres:aWKYCDptuVlLYJZUyIsVIuVhlrFkzzYJ@viaduct.proxy.rlwy.net:10778/railway
+      - NODE_ENV=development
+
+    env_file:
+      - ./backend/.env
