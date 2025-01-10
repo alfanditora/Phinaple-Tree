@@ -18,7 +18,8 @@ router.post('/create', roleAuthorization(['admin']), async (req, res) => {
         battery,
         OS,
         price,
-        stock
+        stock,
+        image
     } = req.body;
 
     try {
@@ -39,7 +40,8 @@ router.post('/create', roleAuthorization(['admin']), async (req, res) => {
             battery,
             OS,
             price,
-            stock
+            stock,
+            image
         });
         return res.status(201).json({ message: 'Product created', product: newProduct });
     } catch (error) {
@@ -91,7 +93,8 @@ router.put('/:productName', roleAuthorization(['admin']), async (req, res) => {
         battery,
         OS,
         price,
-        stock
+        stock,
+        image
     } = req.body;
 
     try {
@@ -112,6 +115,7 @@ router.put('/:productName', roleAuthorization(['admin']), async (req, res) => {
         product.OS = OS || product.OS;
         product.price = price || product.price;
         product.stock = stock || product.stock;
+        product.image = image || product.image;
 
         await product.save();
         return res.status(200).json({ message: 'Product updated', product });

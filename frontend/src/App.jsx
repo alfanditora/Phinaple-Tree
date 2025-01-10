@@ -7,6 +7,9 @@ import LandingPage from './pages/landingPage';
 import HomePage from './pages/homePage';
 import ProductDetails from './pages/productDetails';
 import ChatbotPage from './pages/chatbotPage';
+import PaymentPage from './pages/paymentPage';
+import { PaymentSuccessPage, PaymentExpiredPage } from './pages/paymentResult';
+import PaymentHistoryPage from './pages/historyPage';
 
 const App = () => {
   return (
@@ -37,6 +40,38 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <ChatbotPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <PaymentPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment/success"
+            element={
+              <ProtectedRoute>
+                <PaymentSuccessPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment/expired/"
+            element={
+              <ProtectedRoute>
+                <PaymentExpiredPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <ProtectedRoute>
+                <PaymentHistoryPage />
               </ProtectedRoute>
             }
           />

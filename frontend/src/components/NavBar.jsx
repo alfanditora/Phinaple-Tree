@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
-import { Home, MessageSquare, LogOut } from 'lucide-react';
+import { Home, MessageSquare, LogOut, ClockIcon } from 'lucide-react';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -21,12 +21,10 @@ const Navbar = () => {
     <nav className="bg-gradient-to-r from-gray-100 to-gray-200 border-b border-gray-200 w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          {/* Logo and Brand */}
           <div className="flex-shrink-0 flex items-center">
             <span className="text-xl font-bold text-gray-900">TechStore</span>
           </div>
 
-          {/* Navigation Links */}
           <div className="flex items-center">
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <button
@@ -39,6 +37,18 @@ const Navbar = () => {
               >
                 <Home className="w-4 h-4 mr-2" />
                 Home
+              </button>
+
+              <button
+                onClick={() => navigate('/history')}
+                className={`${
+                  isActive('/history')
+                    ? 'border-gray-900 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:text-gray-900'
+                } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200`}
+              >
+                <ClockIcon className="w-4 h-4 mr-2" />
+                History
               </button>
 
               <button
@@ -62,15 +72,23 @@ const Navbar = () => {
               </button>
             </div>
 
-            {/* Mobile Menu Button */}
             <div className="sm:hidden flex items-center space-x-4">
               <button
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/home')}
                 className={`${
-                  isActive('/') ? 'text-gray-900' : 'text-gray-500'
+                  isActive('/home') ? 'text-gray-900' : 'text-gray-500'
                 } p-2 rounded-md hover:text-gray-900`}
               >
                 <Home className="w-5 h-5" />
+              </button>
+
+              <button
+                onClick={() => navigate('/history')}
+                className={`${
+                  isActive('/history') ? 'text-gray-900' : 'text-gray-500'
+                } p-2 rounded-md hover:text-gray-900`}
+              >
+                <ClockIcon className="w-5 h-5" />
               </button>
 
               <button

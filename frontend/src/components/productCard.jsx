@@ -41,7 +41,7 @@ const ProductCard = ({ product }) => {
           className="absolute bottom-4 right-4 px-4 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={() => navigate(`/product/${product.name}`)}
         >
-          View Details
+          Buy now
         </button>
       </div>
     </div>

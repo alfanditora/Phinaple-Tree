@@ -3,6 +3,7 @@ const sequelize = require('./config/db');
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/product');
 const chatbotRoutes = require('./routes/chatbot');
+const paymentRoutes = require('./routes/payment');
 const authenticate = require('./middleware/auth');
 const userRateLimiter = require('./middleware/limiter');
 const chatbotRateLimiter = require('./middleware/chatbotLimiter');
@@ -21,6 +22,9 @@ app.use('/api/products', authenticate, userRateLimiter, productRoutes);
 
 // Chatbot Routes (Protected)
 app.use('/api/chatbot', authenticate, chatbotRateLimiter, chatbotRoutes);
+
+// Payment Routes (Protected)
+app.use('/api/payment', authenticate, userRateLimiter, paymentRoutes);
 
 // Start server and connect to the database
 const startServer = async () => {
