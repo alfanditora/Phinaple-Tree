@@ -6,11 +6,11 @@ const Payment = sequelize.define('Payment', {
         type: DataTypes.STRING,
         primaryKey: true
     },
-    user_id: {  // Add user_id field
+    user_id: { 
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'users',  // This should match your users table name
+            model: 'users',
             key: 'id'
         }
     },
@@ -55,7 +55,6 @@ const Payment = sequelize.define('Payment', {
     timestamps: true,
 });
 
-// Define associations
 Payment.associate = (models) => {
     Payment.belongsTo(models.User, {
         foreignKey: 'user_id',

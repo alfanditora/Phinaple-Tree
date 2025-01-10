@@ -19,20 +19,17 @@ const userRateLimiter = (req, res, next) => {
 
     const userData = userLimit[userId];
 
-    // Reset hitungan jika jendela waktu telah berlalu
     if (currentTime - userData.startTime > WINDOW_MS) {
         userData.requests = 0;
         userData.startTime = currentTime;
     }
 
-    // Cek apakah pengguna sudah melebihi batas permintaan
     if (userData.requests >= MAX_REQUESTS) {
         return res.status(429).json({
             error: "Too many requests. Please try again later.",
         });
     }
 
-    // Tambahkan hitungan permintaan
     userData.requests++;
     next();
 };
