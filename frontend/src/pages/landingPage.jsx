@@ -29,10 +29,7 @@ const LandingPage = () => {
             <div className="pt-20 pb-24">
               <div className="text-center">
                 <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                  <span className="block">The Future of</span>
-                  <span className="block bg-clip-text text-transparent bg-gradient-to-r from-gray-600 to-gray-900">
-                    Mobile Technology
-                  </span>
+                  <span className="block">Phinaple Tree</span>
                 </h1>
                 <p className="mt-3 max-w-md mx-auto text-base text-gray-600 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
                   Discover the next generation of smartphones. Experience innovation at your fingertips.
